@@ -1,12 +1,13 @@
 // Layer 1 - Page: Register
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { authService } from "../service/authService";
 import InputField from "../../shared/components/InputField";
 import Button from "../../shared/components/Button";
+import { useAuth } from "../hooks/useAuth";
+import { useSelector } from "react-redux";
 
 const RegisterPage = () => {
-  // const { login } = useAuth();
+  const { handleRegister } = useAuth();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -15,39 +16,25 @@ const RegisterPage = () => {
     password: "",
     confirmPassword: "",
   });
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const error = useSelector(state=> state.auth.error);
+  const loading = useSelector(state => state.auth.loading);
 
   const handleChange = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
 
     if (form.password !== form.confirmPassword) {
-      setError("Passwords do not match.");
+      // setError("Passwords do not match.");
       return;
     }
     if (form.password.length < 6) {
-      setError("Password must be at least 6 characters.");
+      // setError("Password must be at least 6 characters.");
       return;
     }
-
-    setLoading(true);
-    try {
-      const data = await authService.register(
-        form.username,
-        form.email,
-        form.password
-      );
-      login(data);
-      navigate("/arena");
-    } catch (err) {
-      setError(err.message || "Registration failed. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    await handleRegister(form.username,form.email.form.password);
+    navigate('/login');
   };
 
   return (

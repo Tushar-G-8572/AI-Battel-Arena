@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import { authService } from "../service/authService";
 import InputField from "../../shared/components/InputField";
 import Button from "../../shared/components/Button";
 import { useSelector } from "react-redux";
@@ -13,24 +12,28 @@ const LoginPage = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const loading = useSelector(state => state.auth.loading);
   const error = useSelector(state => state.auth.error);
+  const user = useSelector(state => state.auth.user);
 
   const handleChange = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setLoading(true);
-    try {
-      const data = await authService.login(form.email, form.password);
-      login(data);
-      navigate("/arena");
-    } catch (err) {
-      setError(err.message || "Invalid credentials. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    await handleLogin(form.email,form.password);
+    navigate('/')
   };
+
+  if(loading){
+    return (
+      <h1>Loading....</h1>
+    )
+  }
+
+  if(!loading && user){
+    navigate('/')
+  }
+
+
 
   return (
     <div className="min-h-screen bg-[#060e20] flex items-center justify-center px-4">
