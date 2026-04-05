@@ -1,12 +1,13 @@
 // Layer 2 - Component: Application navbar
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/hooks/useAuth";
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user} = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout();
+    // logout();
     navigate("/login");
   };
 
