@@ -70,14 +70,14 @@ const LoginPage = () => {
           </h2>
 
           {/* Error Banner */}
-          {error && (
+          {/* {error && (
             <div
               id="login-error"
               className="mb-4 px-4 py-2.5 bg-[#7f2927]/30 border border-[#7f2927]/50 rounded-lg text-[#ff9993] text-xs"
             >
               {error}
             </div>
-          )}
+          )} */}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <InputField

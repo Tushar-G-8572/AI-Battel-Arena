@@ -5,10 +5,10 @@ import { login,register,getMe } from "../service/authService";
 export function useAuth(){
     const dispatch = useDispatch();
 
-    async function handleRegister({username,email,password}) {
+    async function handleRegister(username,email,password) {
         try{
             dispatch(setLoading(true))
-            const data = await register({username,email,password})
+            const data = await register(username,email,password)
             // dispatch(setUser(data.user));
         }catch(error){
             dispatch(setError(error.response?.data?.message || "Registration failed"))
@@ -18,10 +18,11 @@ export function useAuth(){
         
     }
 
-    async function handleLogin({email,password}) {
+    async function handleLogin(email,password) {
         try{
+            console.log(email,password)
             dispatch(setLoading(true));
-            const data = await login({email,password});
+            const data = await login(email,password);
             dispatch(setUser(data.user));
         }catch(error){
             dispatch(setError(error.response?.data?.message || "Login failed"))

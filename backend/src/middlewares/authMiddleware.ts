@@ -19,9 +19,8 @@ export async function authMiddleware(
   next: NextFunction
 ): Promise<void> {
   try {
-    const token =
+    const token = 
       req.cookies?.token || req.headers.authorization?.split(" ")[1];
-
     if (!token) {
       res.status(401).json({
         success: false,
