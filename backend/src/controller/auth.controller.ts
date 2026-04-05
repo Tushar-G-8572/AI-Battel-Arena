@@ -31,7 +31,7 @@ export async function handleRegisterController(req: Request, res: Response) {
     );
 
     // Build verification URL
-    const verificationUrl = `${config.CLIENT_URL}/verify-email?token=${token}`;
+    const verificationUrl = `${config.CLIENT_URL}/api/auth/verify-email?token=${token}`;
 
     // Send verification email
     await sendEmail({
