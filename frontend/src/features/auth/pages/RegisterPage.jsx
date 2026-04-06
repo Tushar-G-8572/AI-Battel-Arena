@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../shared/components/InputField";
+import GoogleAuth from "../components/GoogleAuth";
 import Button from "../../shared/components/Button";
 import { useAuth } from "../hooks/useAuth";
 import { useSelector } from "react-redux";
@@ -34,7 +35,7 @@ const RegisterPage = () => {
       // setError("Password must be at least 6 characters.");
       return;
     }
-    await handleRegister(form.username,form.email.form.password);
+    await handleRegister(form.username,form.email,form.password);
     navigate('/login');
   };
 
@@ -52,8 +53,8 @@ const RegisterPage = () => {
     <div className="min-h-screen bg-[#060e20] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 bg-[#00225a] rounded-xl mb-4">
+        <div className="text-center mb-4">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-[#00225a] rounded-xl mb-2">
             <svg
               width="24"
               height="24"
@@ -92,7 +93,7 @@ const RegisterPage = () => {
             </div>
           )} */}
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <InputField
               id="register-username"
               label="Username"
@@ -142,6 +143,8 @@ const RegisterPage = () => {
               Create Account
             </Button>
           </form>
+
+          <GoogleAuth />
 
           <p className="text-center text-[#91aaeb] text-xs mt-5">
             Already have an account?{" "}

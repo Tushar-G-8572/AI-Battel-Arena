@@ -5,6 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 import InputField from "../../shared/components/InputField";
 import Button from "../../shared/components/Button";
 import { useSelector } from "react-redux";
+import GoogleAuth from "../components/GoogleAuth";
 
 const LoginPage = () => {
   const { handleLogin } = useAuth();
@@ -109,7 +110,7 @@ const LoginPage = () => {
               Sign In
             </Button>
           </form>
-
+            <GoogleAuth />
           <p className="text-center text-[#91aaeb] text-xs mt-5">
             Don't have an account?{" "}
             <Link

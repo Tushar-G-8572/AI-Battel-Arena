@@ -12,7 +12,8 @@ type CONFIG = {
    readonly CLIENT_SECRET:string,
    readonly REFRESH_TOKEN:string,
    readonly EMAIL_USER:string,
-   readonly CLIENT_URL:string
+   readonly CLIENT_URL:string,
+   readonly CALLBACK_URL:string
 }
 
 const config: CONFIG = {
@@ -26,7 +27,8 @@ const config: CONFIG = {
     CLIENT_SECRET: process.env.CLIENT_SECRET || "",
     REFRESH_TOKEN: process.env.REFRESH_TOKEN || "",
     EMAIL_USER: process.env.EMAIL_USER || "",
-    CLIENT_URL: process.env.CLIENT_URL || ""
+    CLIENT_URL: process.env.CLIENT_URL || "",
+    CALLBACK_URL: process.env.CALLBACK_URL || ""
 }
 
 export default config;
