@@ -1,4 +1,3 @@
-// Layer 1 - Page: Register
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../shared/components/InputField";
@@ -35,8 +34,8 @@ const RegisterPage = () => {
       // setError("Password must be at least 6 characters.");
       return;
     }
-    await handleRegister(form.username,form.email,form.password);
-    navigate('/login');
+    const success = await handleRegister(form.username,form.email,form.password);
+    if(success) navigate('/login')
   };
 
   if(loading){

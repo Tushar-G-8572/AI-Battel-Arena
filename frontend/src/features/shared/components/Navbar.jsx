@@ -1,13 +1,13 @@
-// Layer 2 - Component: Application navbar
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useAuth } from "../../auth/hooks/useAuth";
 
 const Navbar = () => {
-  const { user} = useAuth();
   const navigate = useNavigate();
-
-  const handleLogout = () => {
-    // logout();
+  const {handleLogout} = useAuth();
+  const user = useSelector(state => state.auth.user);
+  const handleSubmit = async () => {
+    await handleLogout();
     navigate("/login");
   };
 
@@ -49,7 +49,7 @@ const Navbar = () => {
             </div>
             <button
               id="logout-btn"
-              onClick={handleLogout}
+              onClick={handleSubmit}
               className="text-xs text-[#91aaeb] hover:text-[#dee5ff] border border-[#2b4680] hover:border-[#5b74b1] px-3 py-1.5 rounded transition-all duration-200 cursor-pointer"
             >
               Logout

@@ -20,8 +20,8 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleLogin(form.email,form.password);
-    navigate('/')
+   const success=  await handleLogin(form.email,form.password);
+    if(success) navigate('/')
   };
 
   if(loading){

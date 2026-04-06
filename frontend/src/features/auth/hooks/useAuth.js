@@ -1,52 +1,74 @@
 import { useDispatch } from "react-redux";
-import { setError,setLoading,setUser } from "../auth.slice";
-import { login,register,getMe } from "../service/authService";
+import { setError, setLoading, setUser } from "../auth.slice";
+import { login, register, getMe, logout } from "../service/authService";
 
-export function useAuth(){
+export function useAuth() {
     const dispatch = useDispatch();
 
-    async function handleRegister(username,email,password) {
-        try{
+    async function handleRegister(username, email, password) {
+        try {
             dispatch(setLoading(true))
-            const data = await register(username,email,password)
+            const data = await register(username, email, password)
+            return true
             // dispatch(setUser(data.user));
-        }catch(error){
+        } catch (error) {
             dispatch(setError(error.response?.data?.message || "Registration failed"))
-        }finally{
+            return false;
+        } finally {
             dispatch(setLoading(false));
         }
-        
+
     }
 
-    async function handleLogin(email,password) {
-        try{
-            console.log(email,password)
+    async function handleLogin(email, password) {
+        try {
             dispatch(setLoading(true));
-            const data = await login(email,password);
-            dispatch(setUser(data.user));
-        }catch(error){
-            dispatch(setError(error.response?.data?.message || "Login failed"))
-        }finally{
+            dispatch(setError(null));
+            const response = await login({ email, password });
+            dispatch(setUser(response.data.user));
+            return true;   // ✅ signal success
+        } catch (error) {
+            dispatch(setError(error.response?.data?.message || "Login failed"));
+            return false;  // ✅ signal failure
+        } finally {
             dispatch(setLoading(false));
         }
     }
 
     async function handleGetMe() {
-        try{
+        try {
             dispatch(setLoading(true));
             const data = await getMe();
             dispatch(setUser(data.user));
         }
-        catch(error){
+        catch (error) {
             dispatch(setError(error.response?.data?.message || "Error getting user"))
         }
-        finally{
+        finally {
             dispatch(setLoading(false))
         }
     }
 
+    async function handleLogout() {
+        try {
+            dispatch(setLoading(true));
+            dispatch(setError(null));
+
+            await logout();
+
+        } catch (error) {
+            // log it but don't block the logout — cookie may already be cleared
+            console.error("Logout error:", error);
+            dispatch(setError(error.response?.data?.message || "Logout failed"));
+
+        } finally {
+            dispatch(setUser(null));
+            dispatch(setLoading(false));
+        }
+    }
+
     return {
-        handleGetMe,handleLogin,handleRegister
+        handleGetMe, handleLogin, handleRegister, handleLogout
     }
 }
 
