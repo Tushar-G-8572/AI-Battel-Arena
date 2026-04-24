@@ -34,7 +34,25 @@ export async function handleRunGraph(req:Request,res:Response) {
 }
 
 export async function handleGetBattleHistory(req:Request,res:Response) {
-    
+    try{
+        const {battleId} = req.params;
+        const userId = req.user?.id;
+        if(!battleId){
+            return res.status(400).json({success:false,message:"battle ID needed"})
+        }
+        if (!userId) {
+            return res.status(401).json({ success: false, message: "Unauthorized" });
+        }
+
+    const battleDetail = await sessionModel.findOne({_id:battleId,user:userId});
+    if(!battleDetail){
+        return res.status(404).json({success:false,message:"No battle found"})
+    } 
+    return res.status(200).json({success:true,message:"Battle detals fetched",data:battleDetail})
+}catch(error){
+    console.error(error);
+    return res.status(500).json({success:false,message:"Error while fetching battle details"})
+}
 }
 
 export async function handleGetAllProblems(req:Request, res:Response) {
@@ -45,7 +63,7 @@ export async function handleGetAllProblems(req:Request, res:Response) {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }
         const battleProblems = await sessionModel.find({user:id}).lean()
-        if(battleProblems.length>1){
+        if(battleProblems.length<1){
             return res.status(200).json({success:true,message:"No battle started yet"});
         }
 

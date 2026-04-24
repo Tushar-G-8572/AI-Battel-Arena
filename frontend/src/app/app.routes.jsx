@@ -3,6 +3,7 @@ import LoginPage from '../features/auth/pages/LoginPage'
 import RegisterPage from '../features/auth/pages/RegisterPage'
 import ArenaPage from '../features/ai/pages/ArenaPage'
 import ProtectedRoute from '../features/auth/components/ProtectedRoute'
+import Home from '../features/auth/pages/Home'
 
 const router = createBrowserRouter([
     {
@@ -16,7 +17,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <ProtectedRoute>
-            <ArenaPage />
+            <Home />
         </ProtectedRoute>
     },
     {

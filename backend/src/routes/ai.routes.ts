@@ -6,7 +6,7 @@ const aiRouter = Router();
 
 aiRouter.post('/arena',authMiddleware,handleRunGraph);
 
-aiRouter.get('/battleHistory/:sessionId',authMiddleware,handleGetBattleHistory);
+aiRouter.get('/battleHistory/:battleId',authMiddleware,handleGetBattleHistory);
 
 aiRouter.get('/problems',authMiddleware,handleGetAllProblems);
 

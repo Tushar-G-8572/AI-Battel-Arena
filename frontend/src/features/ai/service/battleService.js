@@ -11,9 +11,15 @@ export async function sendProblemToAI(inputMessage) {
   return response.data;
 }
 
-export async function handleGetAllProblems() {
-  const response = await api.get('/')
-  console.log("ALL Problems",response.data.data);
+export async function getAllProblems() {
+  const response = await api.get('/problems')
+  console.log("ALL Battle Problems",response.data.data);
+  return response.data;
+}
+
+export async function getBattleByID(battleId) {
+  const response = await api.get(`/battleHistory/${battleId}`);
+  // console.log("Specific problem fetched",response.data.data);
   return response.data;
 }
 

@@ -180,17 +180,15 @@ const judgeNode: GraphNode<typeof state> = async (state) => {
         judge2.invoke({ messages: [humanMessage] }),
     ])
 
-    // ✅ Pick first successful response
     let judgeResponse
     if (result1.status === 'fulfilled') {
         judgeResponse = result1.value
     } else if (result2.status === 'fulfilled') {
-        console.warn('Judge 1 failed, falling back to Judge 2:', result1.reason)
+        // console.warn('Judge 1 failed, falling back to Judge 2:', result1.reason)
         judgeResponse = result2.value
     } else {
-        // ✅ Both failed — throw a clear error
-        console.error('Judge 1 error:', result1.reason)
-        console.error('Judge 2 error:', result2.reason)
+        // console.error('Judge 1 error:', result1.reason)
+        // console.error('Judge 2 error:', result2.reason)
         throw new Error('Both judges failed to evaluate the solutions.')
     }
 

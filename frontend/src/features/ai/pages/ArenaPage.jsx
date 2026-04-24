@@ -82,27 +82,25 @@ const ArenaPage = () => {
     prevLoadingRef.current = loading;
   }, [loading, error, aiResponse]);
 
-  console.log(aiResponse);
+  // console.log(aiResponse);
 
   
   return (
-    <div className="min-h-screen bg-[#060e20] flex flex-col">
-      <Navbar />
-
+    <div className="min-h-screen w-full bg-[#060e20] flex flex-col">
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6">
         {/* Page header */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-[#dee5ff] text-xl font-bold tracking-tight">
+            <h1 className="text-[#dee5ff] text-xl ml-10 font-bold tracking-tight">
               Battle Arena
             </h1>
             
           </div>
-          <p className="text-[#91aaeb] text-sm">
+          <p className="text-[#91aaeb] ml-10 text-sm">
             Submit a prompt and watch two AI models fight it out — judged by a third AI.
           </p>
         </div>
-
+        {/* <SideBar /> */}
         {/* Prompt input */}
         <PromptInput onSubmit={handleBattle}  loading={loading} />
 
