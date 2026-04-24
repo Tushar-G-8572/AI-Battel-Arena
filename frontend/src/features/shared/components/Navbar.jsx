@@ -21,7 +21,7 @@ const Navbar = () => {
     <nav className="sticky top-0 z-50 border-b border-[#2b4680]/30 bg-[#060e20]/95 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-2.5 select-none">
+        <div onClick={()=>{navigate('/')}} className="flex items-center gap-2.5 cursor-pointer select-none">
           <svg
             width="22"
             height="22"

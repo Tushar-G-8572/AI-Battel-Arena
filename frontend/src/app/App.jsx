@@ -10,7 +10,7 @@ const App = () => {
   useEffect(()=>{
     handleGetMe();
   },[])
-
+  
   return (
     <RouterProvider router={router} />
   )

@@ -136,8 +136,8 @@ export async function handleVerifyEmailController(req: Request, res: Response) {
 
 export async function handleLoginController(req: Request, res: Response) {
   try {
-    let { email, password } = req.body;
-    email = email.toLowerCase();
+    const {email,password} = req.body;
+    // console.log("email" ,email,"password",password)
 
     const user = await userModel.findOne({ email }).select("+password");
 

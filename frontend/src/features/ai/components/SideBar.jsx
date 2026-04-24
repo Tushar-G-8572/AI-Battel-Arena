@@ -5,12 +5,15 @@ import useAi from '../hooks/useAi';
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(true);
   const problemStatement = useSelector((state) => state.ai.problemStatement);
-  const { handleGetAllBattleProblems } = useAi();
+  const { handleGetAllBattleProblems, handleGetBattleDetail } = useAi();
 
   useEffect(() => {
     handleGetAllBattleProblems();
   }, []);
 
+  const handleBattleClick = async (battleId) => {
+    await handleGetBattleDetail(battleId);
+  };
 
 
   // Safe check if problemStatement is an array
@@ -66,6 +69,7 @@ const SideBar = () => {
           <div className="flex flex-col gap-1 w-[228px]">
             {problems.map((item, index) => (
               <button
+                onClick={()=>{handleBattleClick(item._id)}}
                 key={item._id || index}
                 className="w-full text-left px-3 py-2.5 rounded-lg text-sm text-[#dee5ff] hover:bg-[#2b4680]/30 transition-colors flex items-center gap-3 group"
                 title={item.problem}

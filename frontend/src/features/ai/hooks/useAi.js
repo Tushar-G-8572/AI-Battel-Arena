@@ -37,7 +37,8 @@ const useAi = ()=>{
         try{
             dispatch(setLoading(true));
             const result = await getBattleByID(battleId);
-            dispatch(setProblemStatement(result.data))
+            dispatch(setAiResponse(result.data));
+            return result.data;
         }catch(error){
             console.error(error);
             dispatch(setError(error.response?.data?.message || "Battle detail error"))

@@ -1,11 +1,11 @@
 import Navbar from "../../shared/components/Navbar";
 import PromptInput from "../components/PromptInput";
-import SolutionCard from "../components/SolutionCard";
-import JudgeVerdict from "./JudgeVerdict";
+import Result from "../components/Result";
 import useAi from "../hooks/useAi";
 import { useSelector } from "react-redux";
 import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
+import SideBar from "../components/SideBar";
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -62,7 +62,7 @@ const ArenaPage = () => {
   const loading = useSelector(state => state.ai.loading);
   const error = useSelector(state => state.ai.error);
   const aiResponse = useSelector(state => state.ai.aiResponse);
-  const {handleSendProblemToAI} = useAi();
+  const {handleSendProblemToAI,handleGetAllBattleProblems} = useAi();
 
   const handleBattle = async (inputMessage) => {
     await handleSendProblemToAI(inputMessage);
@@ -71,32 +71,35 @@ const ArenaPage = () => {
   const prevLoadingRef = useRef(loading);
 
   useEffect(() => {
-    // Detect transition from loading=true to loading=false
     if (prevLoadingRef.current && !loading) {
-      if (error) {
-        toast.error("Battle Incomplete can you retry");
-      } else if (aiResponse) {
+      if (aiResponse) {
         toast.success("Battle completed");
       }
     }
     prevLoadingRef.current = loading;
-  }, [loading, error, aiResponse]);
+  }, [loading, aiResponse]);
 
-  // console.log(aiResponse);
 
+
+  useEffect(()=>{
+    handleGetAllBattleProblems()
+  },[aiResponse])
   
   return (
     <div className="min-h-screen w-full bg-[#060e20] flex flex-col">
+      <Navbar />
+      <div className="flex w-full h-full flex-1 ">
+      <SideBar />
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6">
         {/* Page header */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
-            <h1 className="text-[#dee5ff] text-xl ml-10 font-bold tracking-tight">
+            <h1 className="text-[#dee5ff] text-xl  font-bold tracking-tight">
               Battle Arena
             </h1>
             
           </div>
-          <p className="text-[#91aaeb] ml-10 text-sm">
+          <p className="text-[#91aaeb]  text-sm">
             Submit a prompt and watch two AI models fight it out — judged by a third AI.
           </p>
         </div>
@@ -107,8 +110,8 @@ const ArenaPage = () => {
         {/* Error banner */}
         {error && (
           <div
-            id="arena-error"
-            className="px-4 py-3 bg-[#7f2927]/30 border border-[#7f2927]/50 rounded-lg text-[#ff9993] text-sm"
+          id="arena-error"
+          className="px-4 py-3 bg-[#7f2927]/30 border border-[#7f2927]/50 rounded-lg text-[#ff9993] text-sm"
           >
             {error}
           </div>
@@ -116,57 +119,36 @@ const ArenaPage = () => {
 
 
 
-        {/* Problem statement */}
-        {(loading || aiResponse) && (
-          <div className="bg-[#06122d] border border-[#2b4680]/30 rounded-xl px-5 py-3.5">
-            <div className="flex items-center gap-2 mb-1">
-              <p className="text-[11px] uppercase tracking-widest text-[#91aaeb] font-medium">
-                Problem
-              </p>
-              {aiResponse && (
-                <span className="text-[9px] uppercase tracking-widest px-1.5 py-0.5 bg-[#00225a] text-[#5b74b1] rounded font-medium">
-                  AI Battle Arena
-                </span>
-              )}
-            </div>
-            <p className="text-[#dee5ff] text-sm font-medium leading-relaxed">
-              {aiResponse?.problem}
-            </p>
-          </div>
-        )}
-
-        {/* Solutions grid */}
+        {/* Problem statement & Solutions */}
         {loading ? (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             <SkeletonCard title="Solution 1" />
             <SkeletonCard title="Solution 2" />
           </div>
         ) : aiResponse ? (
-          <>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-              <SolutionCard
-                title="Solution 1"
-                content={aiResponse.solution_1}
-                score={aiResponse.judge?.solution_1_score}
-                reasoning={aiResponse.judge?.solution_1_reasoning}
-              />
-              <SolutionCard
-                title="Solution 2"
-                content={aiResponse.solution_2}
-                score={aiResponse.judge?.solution_2_score}
-                reasoning={aiResponse.judge?.solution_2_reasoning}
-              />
+          <div className="flex flex-col gap-6">
+            <div className="bg-[#06122d] border border-[#2b4680]/30 rounded-xl px-5 py-3.5">
+              <div className="flex items-center gap-2 mb-1">
+                <p className="text-[11px] uppercase tracking-widest text-[#91aaeb] font-medium">
+                  Problem
+                </p>
+                <span className="text-[9px] uppercase tracking-widest px-1.5 py-0.5 bg-[#00225a] text-[#5b74b1] rounded font-medium">
+                  AI Battle Arena
+                </span>
+              </div>
+              <p className="text-[#dee5ff] text-sm font-medium leading-relaxed">
+                {aiResponse?.problem}
+              </p>
             </div>
-
-            {/* Judge Verdict */}
-            {aiResponse.judge && (
-              <JudgeVerdict judge={aiResponse.judge} problem={aiResponse.problem} />
-            )}
-          </>
+            
+            <Result aiResponse={aiResponse} />
+          </div>
         ) : (
           <EmptyState />
         )}
       </main>
+      </div>
+      
     </div>
   );
 };
