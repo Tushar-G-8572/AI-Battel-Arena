@@ -1,14 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const {handleLogout} = useAuth();
   const user = useSelector(state => state.auth.user);
   const handleSubmit = async () => {
-    await handleLogout();
-    navigate("/login");
+    try {
+      await handleLogout();
+      toast.success("Logged out successfully");
+      navigate("/login");
+    } catch (err) {
+      toast.error("Logout failed");
+    }
   };
 
   return (

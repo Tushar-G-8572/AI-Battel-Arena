@@ -189,7 +189,7 @@ export async function handleLoginController(req: Request, res: Response) {
 export async function handleGetMeController(req: Request, res: Response) {
   try {
     const id = req.user?.id;
-
+    console.log(id)
     if (!id) {
       return res.status(401).json({
         success: false,
@@ -198,6 +198,7 @@ export async function handleGetMeController(req: Request, res: Response) {
     }
 
     const user = await userModel.findById(id).select("username email").lean();
+    // console.log(user)
 
     if (!user) {
       return res.status(404).json({

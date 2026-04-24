@@ -1,11 +1,12 @@
 // Layer 1 - Page: Login
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import InputField from "../../shared/components/InputField";
 import Button from "../../shared/components/Button";
 import { useSelector } from "react-redux";
 import GoogleAuth from "../components/GoogleAuth";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const { handleLogin } = useAuth();
@@ -21,7 +22,12 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
    const success=  await handleLogin(form.email,form.password);
-    if(success) navigate('/')
+    if(success) {
+      toast.success("User logged in successfully");
+      navigate('/');
+    }else{
+      toast.error("Error in loggin");
+    }
   };
 
   if(loading){

@@ -1,8 +1,13 @@
 import {Router} from 'express'
-import { handleRunGraph } from '../controller/ai.controller.js';
+import { handleGetBattleHistory, handleRunGraph,handleGetAllProblems } from '../controller/ai.controller.js';
+import { authMiddleware } from '../middlewares/authMiddleware.js';
 
 const aiRouter = Router();
 
-aiRouter.post('/arena',handleRunGraph);
+aiRouter.post('/arena',authMiddleware,handleRunGraph);
+
+aiRouter.get('/battleHistory/:sessionId',authMiddleware,handleGetBattleHistory);
+
+aiRouter.get('/problems',authMiddleware,handleGetAllProblems);
 
 export default aiRouter;

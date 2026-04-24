@@ -5,7 +5,8 @@ const aiSlice = createSlice({
     initialState:{
         loading:false,
         error:null,
-        aiResponse:null
+        aiResponse:null,
+        problemStatement:[]
     },
     reducers:{
         setLoading:(state,action)=>{
@@ -16,10 +17,13 @@ const aiSlice = createSlice({
         },
         setError:(state,action)=>{
             state.error = action.payload
+        },
+        setProblemStatement:(state,action)=>{
+            state.problemStatement = action.payload
         }
     }
 })
 
-export const {setAiResponse,setError,setLoading} = aiSlice.actions;
+export const {setAiResponse,setError,setLoading,setProblemStatement} = aiSlice.actions;
 
 export default aiSlice.reducer;

@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../../shared/components/InputField";
 import GoogleAuth from "../components/GoogleAuth";
 import Button from "../../shared/components/Button";
 import { useAuth } from "../hooks/useAuth";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const { handleRegister } = useAuth();
@@ -25,17 +26,22 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (form.password !== form.confirmPassword) {
-      // setError("Passwords do not match.");
-      return;
-    }
     if (form.password.length < 6) {
-      // setError("Password must be at least 6 characters.");
-      return;
+      toast.error("Password must be at least 6 characters.")
+      return
     }
+    if (form.password !== form.confirmPassword) {
+      toast.error("Passwords do not match.")
+      return
+    }
+    
     const success = await handleRegister(form.username,form.email,form.password);
-    if(success) navigate('/login')
+    if(success) {
+      toast.success("Verify Your Email");
+      navigate('/login');
+    }else{
+      toast.error("Error in Registering")
+    }
   };
 
   if(loading){
@@ -43,6 +49,8 @@ const RegisterPage = () => {
       <h1>Loading...</h1>
     )
   }
+
+
 
   if(!loading && user){
     navigate('/')

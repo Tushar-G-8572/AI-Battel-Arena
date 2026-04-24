@@ -4,6 +4,8 @@ import SolutionCard from "../components/SolutionCard";
 import JudgeVerdict from "./JudgeVerdict";
 import useAi from "../hooks/useAi";
 import { useSelector } from "react-redux";
+import { useEffect, useRef } from "react";
+import { toast } from "react-toastify";
 
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -65,6 +67,21 @@ const ArenaPage = () => {
   const handleBattle = async (inputMessage) => {
     await handleSendProblemToAI(inputMessage);
   };
+  
+  const prevLoadingRef = useRef(loading);
+
+  useEffect(() => {
+    // Detect transition from loading=true to loading=false
+    if (prevLoadingRef.current && !loading) {
+      if (error) {
+        toast.error("Battle Incomplete can you retry");
+      } else if (aiResponse) {
+        toast.success("Battle completed");
+      }
+    }
+    prevLoadingRef.current = loading;
+  }, [loading, error, aiResponse]);
+
   console.log(aiResponse);
 
   
