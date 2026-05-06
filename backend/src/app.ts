@@ -28,7 +28,7 @@ app.use('/api/ai',aiRouter);
 app.use('/api/auth',authRouter);
 
 app.use('*name',(req:Request,res:Response)=>{
- res.sendFile(path.join(__dirname,'..','public','index.html'));
+ res.sendFile(path.join(__dirname,'../..','public','index.html'));
 })
 
 export default app;
