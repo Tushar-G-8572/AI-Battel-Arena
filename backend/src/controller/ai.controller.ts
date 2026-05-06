@@ -62,7 +62,7 @@ export async function handleGetAllProblems(req:Request, res:Response) {
         if (!id) {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }
-        const battleProblems = await sessionModel.find({user:id}).lean()
+        const battleProblems = await sessionModel.find({user:id}).sort({ createdAt: -1 }).lean()
         if(battleProblems.length<1){
             return res.status(200).json({success:true,message:"No battle started yet"});
         }

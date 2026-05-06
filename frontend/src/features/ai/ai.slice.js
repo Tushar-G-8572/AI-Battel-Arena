@@ -20,10 +20,16 @@ const aiSlice = createSlice({
         },
         setProblemStatement:(state,action)=>{
             state.problemStatement = action.payload
+        },
+        resetAI:(state)=>{
+            state.aiResponse = null;
+            state.problemStatement = [];
+            state.error = null;
+            state.loading = false;
         }
     }
 })
 
-export const {setAiResponse,setError,setLoading,setProblemStatement} = aiSlice.actions;
+export const {setAiResponse,setError,setLoading,setProblemStatement,resetAI} = aiSlice.actions;
 
 export default aiSlice.reducer;

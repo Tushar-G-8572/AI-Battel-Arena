@@ -1,4 +1,3 @@
-// Layer 2 - Component: Renders markdown content including code blocks
 import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
