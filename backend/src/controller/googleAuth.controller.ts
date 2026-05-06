@@ -55,7 +55,7 @@ export async function handleGoogleCallbackController(req: Request, res: Response
         }, secret,
             { expiresIn: '2d' })
         res.cookie('token', token);
-        return res.redirect(`http://localhost:5173`);
+        return res.redirect(config.CLIENT_URL);
 
     } catch (error) {
         console.error("Google Callback Error:", error);
