@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #060e20;
+  --color-surface-low: #06122d;
+  --color-surface-mid: #05183c;
+  --color-surface-high: #031d4b;
+  --color-surface-higher: #00225a;
+  --color-primary: #adc6ff;
+  --color-primary-btn: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-secondary: #9e9da1;
+  --color-on-surface: #dee5ff;
+  --color-on-surface-dim: #91aaeb;
+  --color-outline: #5b74b1;
+  --color-outline-dim: #2b4680;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+* {
+  font-family: "Inter", system-ui, sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #060e20;
+  color: #dee5ff;
+  margin: 0;
+  padding: 0;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #06122d;
+}
+::-webkit-scrollbar-thumb {
+  background: #2b4680;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5b74b1;
+}
+
+/* Code block override for react-syntax-highlighter */
+pre {
+  margin: 0 !important;
+  border-radius: 6px !important;
+}
