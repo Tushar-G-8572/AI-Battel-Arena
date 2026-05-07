@@ -1,7 +1,7 @@
-import { StateSchema, type GraphNode,START,END, type CompiledStateGraph, StateGraph } from '@langchain/langgraph'
+import { StateSchema, type GraphNode, START, END, type CompiledStateGraph, StateGraph } from '@langchain/langgraph'
 import z from 'zod'
-import { mistralModel, cohereModel, googleModel,openAImodel, mistralJudgeModel } from './models.ai.js'
-import { createAgent, HumanMessage, providerStrategy,toolStrategy } from 'langchain'
+import { mistralModel, cohereModel, googleModel, openAImodel, mistralJudgeModel } from './models.ai.js'
+import { createAgent, HumanMessage, providerStrategy, toolStrategy } from 'langchain'
 
 const state = new StateSchema({
     problem: z.string().default(""),
@@ -64,16 +64,24 @@ const judgeNode: GraphNode<typeof state> = async (state) => {
         judge2.invoke({ messages: [humanMessage] }),
     ])
 
+    // ✅ Log the real errors so you can see them in Render logs
+    if (result1.status === 'rejected') {
+        console.error('Judge 1 (Google) failed:', result1.reason)
+    }
+    if (result2.status === 'rejected') {
+        console.error('Judge 2 (Mistral) failed:', result2.reason)
+    }
+
     let judgeResponse
     if (result1.status === 'fulfilled') {
         judgeResponse = result1.value
     } else if (result2.status === 'fulfilled') {
         judgeResponse = result2.value
     } else {
-        throw new Error('Both judges failed to evaluate the solutions.')
+        throw new Error(`Both judges failed. Judge1: ${result1.reason} | Judge2: ${result2.reason}`)
     }
 
-    const { solution_1_score, solution_2_score, solution_1_reasoning, solution_2_reasoning } 
+    const { solution_1_score, solution_2_score, solution_1_reasoning, solution_2_reasoning }
         = judgeResponse.structuredResponse
 
     return {
@@ -82,14 +90,14 @@ const judgeNode: GraphNode<typeof state> = async (state) => {
 }
 
 const graph = new StateGraph(state)
-                    .addNode('solution',solutionNode)
-                    .addNode('judge_node',judgeNode)
-                    .addEdge(START,"solution")
-                    .addEdge('solution','judge_node')
-                    .addEdge('judge_node',END)
-                    .compile()
+    .addNode('solution', solutionNode)
+    .addNode('judge_node', judgeNode)
+    .addEdge(START, "solution")
+    .addEdge('solution', 'judge_node')
+    .addEdge('judge_node', END)
+    .compile()
 
-export default async function(problem:string){
-    const result = await graph.invoke({problem:problem})
+export default async function (problem: string) {
+    const result = await graph.invoke({ problem: problem })
     return result
 }
