@@ -7,13 +7,13 @@ const api = axios.create({
 
 export async function sendProblemToAI(inputMessage) {
   const response = await api.post('/arena',{inputMessage})
-  console.log("Service",response.data.data);
+  // console.log("Service",response.data.data);
   return response.data;
 }
 
 export async function getAllProblems() {
   const response = await api.get('/problems')
-  console.log("ALL Battle Problems",response.data.data);
+  // console.log("ALL Battle Problems",response.data.data);
   return response.data;
 }
 
