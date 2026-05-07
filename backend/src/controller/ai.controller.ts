@@ -10,7 +10,7 @@ export async function handleRunGraph(req:Request,res:Response) {
             return res.status(401).json({ success: false, message: "Unauthorized" });
         }
         const response = await runGraph(inputMessage);
-        console.log(response);
+        // console.log(response);
         await sessionModel.create({
             problem:response.problem,
             user:id,
@@ -70,7 +70,7 @@ export async function handleGetAllProblems(req:Request, res:Response) {
         return res.status(200).json({success:true,message:"Battle Problems fetched",data:battleProblems})
 
     }catch(error){
-        console.log(error);
+        console.error(error);
         return res.status(400).json({success:false,message:"Error while getting BattleProblems"})
     }
 }
