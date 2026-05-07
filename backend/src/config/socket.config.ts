@@ -6,7 +6,7 @@ let io: Server;
 export function initSocket(server: HttpServer): Server {
   io = new Server(server, {
     cors: {
-      origin: "*",
+      origin: "https://ai-battel-arena.onrender.com",
     },
     allowEIO3: true,
   });

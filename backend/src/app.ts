@@ -18,7 +18,7 @@ app.use(express.static(path.join(__dirname,'../..','public')));
 
 
 app.use(cors({
-    origin:'*',
+    origin:'https://ai-battel-arena.onrender.com',
     credentials:true,
     methods:['GET','POST']
 }))
