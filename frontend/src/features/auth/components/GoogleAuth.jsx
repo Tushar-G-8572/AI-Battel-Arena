@@ -1,5 +1,5 @@
 const GoogleAuth = () => {
-  const baseUrl = "http://localhost:4000";
+  const baseUrl = "https://ai-battel-arena.onrender.com";
 
   return (
     <div className="mt-4">

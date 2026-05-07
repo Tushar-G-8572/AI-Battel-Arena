@@ -22,13 +22,9 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   const success=  await handleLogin(form.email,form.password);
-    if(success) {
-      toast.success("User logged in successfully");
-      navigate('/');
-    }else{
-      toast.error("Error in loggin");
-    }
+    await handleLogin(form.email,form.password);
+    navigate('/');
+  
   };
 
   if(loading){

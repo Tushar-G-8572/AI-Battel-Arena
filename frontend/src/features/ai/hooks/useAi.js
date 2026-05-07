@@ -27,7 +27,7 @@ const useAi = ()=>{
             dispatch(setProblemStatement([...result.data]))
         }catch(error){
             console.error(error);
-            dispatch(setError(error.response?.data?.message || "Battle Problem error"))
+            // dispatch(setError(error.response?.data?.message || "Battle Problem error"))
         }finally{
             dispatch(setLoading(false));
         }
@@ -41,7 +41,7 @@ const useAi = ()=>{
             return result.data;
         }catch(error){
             console.error(error);
-            dispatch(setError(error.response?.data?.message || "Battle detail error"))
+            // dispatch(setError(error.response?.data?.message || "Battle detail error"))
         }finally{
             dispatch(setLoading(false));
         }

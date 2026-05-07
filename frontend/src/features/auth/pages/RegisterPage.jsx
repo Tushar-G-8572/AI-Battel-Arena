@@ -36,13 +36,8 @@ const RegisterPage = () => {
       return
     }
     
-    const success = await handleRegister(form.username,form.email,form.password);
-    if(success) {
-      toast.success("Verify Your Email");
-      navigate('/login');
-    }else{
-      toast.error("Error in Registering")
-    }
+    await handleRegister(form.username,form.email,form.password);
+    navigate('/login');
   };
 
   if(loading){
