@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "outDir": "public",
+    "outDir": "./dist",
 
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
