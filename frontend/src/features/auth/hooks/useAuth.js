@@ -10,7 +10,6 @@ export function useAuth() {
             dispatch(setLoading(true))
             const data = await register(username, email, password)
             return true
-            // dispatch(setUser(data.user));
         } catch (error) {
             dispatch(setError(error.response?.data?.message || "Registration failed"))
             return false;
@@ -20,20 +19,22 @@ export function useAuth() {
 
     }
 
-    async function handleLogin(email, password) {
-        try {
-            dispatch(setLoading(true));
-            dispatch(setError(null));
-            const response = await login({ email, password });
-            dispatch(setUser(response.data.user));
-            return true;   // ✅ signal success
-        } catch (error) {
-            dispatch(setError(error.response?.data?.message || "Login failed"));
-            return false;  // ✅ signal failure
-        } finally {
-            dispatch(setLoading(false));
-        }
+async function handleLogin(email, password) {
+    try {
+        dispatch(setLoading(true));
+        dispatch(setError(null));
+        const response = await login({ email, password });
+        const user = response.user ?? response.data?.user; // ← handles both cases
+        dispatch(setUser(user));
+        return true;
+    } catch (error) {
+        const message = error.response?.data?.message || "Login failed";
+        dispatch(setError(message));
+        throw new Error(message);
+    } finally {
+        dispatch(setLoading(false));
     }
+}
 
     async function handleGetMe() {
         try {
@@ -42,7 +43,7 @@ export function useAuth() {
             dispatch(setUser(data.user));
         }
         catch (error) {
-            dispatch(setError(error.response?.data?.message || "Error getting user"))
+            // dispatch(setError(error?.response?.data?.message || "Error getting user"))
         }
         finally {
             dispatch(setLoading(false))
@@ -59,7 +60,7 @@ export function useAuth() {
         } catch (error) {
             // log it but don't block the logout — cookie may already be cleared
             console.error("Logout error:", error);
-            dispatch(setError(error.response?.data?.message || "Logout failed"));
+            dispatch(setError(error?.message || "Logout failed"));
 
         } finally {
             dispatch(setUser(null));

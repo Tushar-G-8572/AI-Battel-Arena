@@ -12,7 +12,7 @@ export const mistralModel = new ChatMistralAI({
 })
 
 export const mistralJudgeModel = new ChatMistralAI({
-    model:"mistral-small-latest",
+    model:"mistral-large-latest",
     apiKey:config.MISTRAL_API_KEY,
 })
 

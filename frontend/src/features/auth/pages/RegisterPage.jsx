@@ -7,6 +7,7 @@ import { useAuth } from "../hooks/useAuth";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import Loader from "../../shared/components/Loader";
+import { setError } from "../auth.slice";
 
 const RegisterPage = () => {
   const { handleRegister } = useAuth();
@@ -37,7 +38,14 @@ const RegisterPage = () => {
     }
     
     await handleRegister(form.username,form.email,form.password);
+    if(error){
+      toast.error(error)
+    }
+    else{
+    setError('')
+    toast.success("Registered Successfully now verify Email")
     navigate('/login');
+    }
   };
 
   if(loading){
@@ -45,8 +53,6 @@ const RegisterPage = () => {
       <Loader />
     )
   }
-
-
 
   if(!loading && user){
     navigate('/')

@@ -1,5 +1,6 @@
 import { type Request, type Response, type NextFunction } from "express";
 import jwt from "jsonwebtoken";
+import userModel from "../model/user.model.js";
 
 interface JwtPayload {
   id: string;
@@ -24,7 +25,7 @@ export async function authMiddleware(
     if (!token) {
       res.status(401).json({
         success: false,
-        message: "You have to verify your email first.",
+        message: "Please verify your email to login.",
       });
       return;
     }
