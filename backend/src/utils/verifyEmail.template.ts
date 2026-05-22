@@ -16,7 +16,7 @@ export const verificationEmailTemplate = (verificationUrl: string): string => `
             <tr>
               <td style="padding:32px;background:#f8f9fa;border-bottom:1px solid #e0e0e0;">
                 <h1 style="margin:0;color:#333333;font-size:18px;letter-spacing:2px;text-transform:uppercase;">
-                  KINETIC ARENA
+                  AI Battle ARENA
                 </h1>
               </td>
             </tr>
@@ -28,7 +28,7 @@ export const verificationEmailTemplate = (verificationUrl: string): string => `
                   Verify your email
                 </h2>
                 <p style="margin:0 0 32px;color:#666666;font-size:15px;line-height:1.6;">
-                  You're one step away from accessing the Kinetic Intelligence Grid.
+                  You're one step away from accessing the AI Battle Arena.
                   Click the button below to verify your email address.
                   This link expires in <strong style="color:#333333;">24 hours</strong>.
                 </p>
@@ -62,7 +62,7 @@ export const verificationEmailTemplate = (verificationUrl: string): string => `
             <tr>
               <td style="padding:24px 32px;border-top:1px solid #e0e0e0;">
                 <p style="margin:0;color:#999999;font-size:12px;letter-spacing:1px;">
-                  © 2024 KINETIC INTELLIGENCE. ALL RIGHTS RESERVED.
+                  © 2024 AI Battle INTELLIGENCE. ALL RIGHTS RESERVED.
                 </p>
               </td>
             </tr>

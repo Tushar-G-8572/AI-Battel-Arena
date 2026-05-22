@@ -2,18 +2,19 @@ import axios from "axios";
 
 const api = axios.create({
   baseURL:'https://ai-battel-arena.onrender.com/api/ai',
+  // baseURL:"http://localhost:4000/api/ai",
   withCredentials:true
 })
 
 export async function sendProblemToAI(inputMessage) {
   const response = await api.post('/arena',{inputMessage})
-  console.log("Service",response.data.data);
+  // console.log("Service",response.data.data);
   return response.data;
 }
 
 export async function getAllProblems() {
   const response = await api.get('/problems')
-  console.log("ALL Battle Problems",response.data.data);
+  // console.log("ALL Battle Problems",response.data.data);
   return response.data;
 }
 

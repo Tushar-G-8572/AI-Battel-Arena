@@ -36,7 +36,7 @@ export async function handleRegisterController(req: Request, res: Response) {
     // Send verification email
     await sendEmail({
       to: user.email,
-      subject: "Verify your Kinetic Arena account",
+      subject: "Verify your AI Battle Arena account",
       html: verificationEmailTemplate(verificationUrl),
     });
 
@@ -189,17 +189,15 @@ export async function handleLoginController(req: Request, res: Response) {
 export async function handleGetMeController(req: Request, res: Response) {
   try {
     const id = req.user?.id;
-    // console.log(id)
     if (!id) {
       return res.status(401).json({
         success: false,
         message: "Unauthorized",
       });
     }
-
+    
     const user = await userModel.findById(id).select("username email").lean();
-    // console.log(user)
-
+    
     if (!user) {
       return res.status(404).json({
         success: false,
@@ -211,9 +209,9 @@ export async function handleGetMeController(req: Request, res: Response) {
       success: true,
       message: "User fetched successfully",
       user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
+        id: user?._id,
+        username: user?.username,
+        email: user?.email,
       },
     });
   } catch (err: unknown) {
