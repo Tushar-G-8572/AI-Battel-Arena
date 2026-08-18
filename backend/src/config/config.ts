@@ -27,8 +27,8 @@ const config: CONFIG = {
     CLIENT_SECRET: process.env.CLIENT_SECRET || "",
     REFRESH_TOKEN: process.env.REFRESH_TOKEN || "",
     EMAIL_USER: process.env.EMAIL_USER || "",
-    CLIENT_URL: process.env.CLIENT_URL || "",
-    CALLBACK_URL: process.env.CALLBACK_URL || ""
+    CLIENT_URL:  process.env.CLIENT_URL || "http://localhost:5173/",
+    CALLBACK_URL: process.env.CALLBACK_URL || "http://localhost:4000/api/auth/google/callback"
 }
 
 export default config;

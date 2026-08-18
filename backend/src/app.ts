@@ -1,3 +1,4 @@
+import config from './config/config.js';
 import express from 'express'
 import aiRouter from './routes/ai.routes.js';
 import cors from 'cors'
@@ -6,6 +7,7 @@ import cookieParser from 'cookie-parser';
 import path from 'path'
 import { fileURLToPath } from 'url';
 import { type Request, type Response} from 'express'
+
 
 const app = express();
 
@@ -18,12 +20,15 @@ app.use(express.static(path.join(__dirname,'../..','public')));
 
 
 app.use(cors({
-    origin:'https://ai-battel-arena.onrender.com',
-    // origin:"http://localhost:5173",
-    credentials:true,
-    methods:['GET','POST']
-}))
+    origin: config.CLIENT_URL,
+    credentials: true,
+    methods: ['GET', 'POST']
+}));
 app.use(cookieParser());
+
+app.get('/api/health',(req,res)=>{
+    res.send({status:'ok'})
+})
 
 app.use('/api/ai',aiRouter);
 app.use('/api/auth',authRouter);
