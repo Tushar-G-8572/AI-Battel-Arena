@@ -7,12 +7,12 @@ import {ChatOpenAI} from '@langchain/openai'
 
 
 export const mistralModel = new ChatMistralAI({
-    model: "mistral-medium-latest",
+    model: "ministral-8b-2512",
     apiKey:config.MISTRAL_API_KEY,
 })
 
 export const mistralJudgeModel = new ChatMistralAI({
-    model:"mistral-large-latest",
+    model:"codestral-latest",
     apiKey:config.MISTRAL_API_KEY,
 })
 
